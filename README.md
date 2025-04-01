@@ -101,45 +101,13 @@ The application follows a modern client-server architecture:
 3. Create a `.env` file in the backend directory with the following content:
    ```
    PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/weather_dashboard
-   API_KEY=your_api_key_for_sensehat_authentication
+   MONGODB_URI=your_mongodb_uri
    ```
 
 4. Start the backend server:
    ```bash
    npm run dev
    ```
-
-## Production Deployment with Docker
-
-### Prerequisites
-- Docker
-- Docker Compose
-
-### Deployment Steps
-
-1. Build the frontend for production:
-   ```bash
-   npm run build
-   ```
-
-2. Build and run the Docker containers:
-   ```bash
-   docker compose build
-   docker compose up -d
-   ```
-
-3. Access the application at `http://localhost:5137`
-
-### Docker Configuration Details
-
-The application is containerized using Docker with the following components:
-
-- Frontend container running Nginx to serve the static files
-- Backend container running the Express.js server
-- MongoDB container for data persistence
-
-The Docker Compose setup ensures all services start correctly and are networked together.
 
 ## Connecting to Raspberry Pi SenseHAT
 
@@ -490,6 +458,24 @@ VITE_API_BASE_URL=http://localhost:5000
 ```bash
 npm run dev
 ```
+
+5. Open your browser and navigate to `http://localhost:5173`
+
+### Mock Data Configuration
+
+By default, the application uses mock data to simulate SenseHAT readings for development purposes. This is controlled by the `USE_MOCK_DATA` flag in `src/hooks/useSenseHatData.js`.
+
+To switch between mock and real SenseHAT data:
+
+1. Open `src/hooks/useSenseHatData.js`
+2. Locate the `USE_MOCK_DATA` constant near the top of the file:
+   ```javascript
+   const USE_MOCK_DATA = true; // Set to false to use real API
+   ```
+3. Set it to `false` to use real SenseHAT data from your backend API
+4. Set it to `true` to use mock data for development
+
+Note: When using real data, ensure your backend server is running and properly configured to receive data from your Raspberry Pi SenseHAT.
 
 ### Backend Setup
 1. Navigate to the backend directory
